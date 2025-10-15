@@ -193,7 +193,7 @@ while true; do
     echo $MONITOR_PID > "$MONITOR_PID_FILE"
 
     # start server in foreground (SERVER_CFG is already just the filename now)
-    LAUNCHSERVER="$PREFIX +set fs_game $FS_GAME +set dedicated \"$DEDICATED\" +exec $SERVER_CFG +set net_port $PORT +set sv_master1 \"$SV_MASTER1\" +set g_motd $FS_GAME"
+    LAUNCHSERVER="$PREFIX +set fs_game $FS_GAME +set dedicated \"$DEDICATED\" +exec $SERVER_CFG +set net_port $PORT +set sv_master1 \"$SV_MASTER1\" +set currmod $FS_GAME"
     cecho -c green "$LAUNCHSERVER"
     $LAUNCHSERVER
     status=$?
