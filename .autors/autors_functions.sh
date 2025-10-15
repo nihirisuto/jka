@@ -52,15 +52,20 @@ load_ini() {
     fi
     
     while IFS= read -r line || [ -n "$line" ]; do  # Added: || [ -n "$line" ]
-        line=$(echo "$line" | xargs)
+        # Trim leading/trailing whitespace using bash parameter expansion
+        line="${line#"${line%%[![:space:]]*}"}"
+        line="${line%"${line##*[![:space:]]}"}"
         [[ -z $line || $line =~ ^# ]] && continue
         if [[ $line =~ ^\[(.+)\]$ ]]; then
             section="${BASH_REMATCH[1]}"
         elif [[ $line =~ ^([^=]+)=(.*)$ ]]; then
             key="${BASH_REMATCH[1]}"
             value="${BASH_REMATCH[2]}"
-            key=$(echo "$key" | xargs)
-            value=$(echo "$value" | xargs)
+            # Trim leading/trailing whitespace from key and value
+            key="${key#"${key%%[![:space:]]*}"}"
+            key="${key%"${key##*[![:space:]]}"}"
+            value="${value#"${value%%[![:space:]]*}"}"
+            value="${value%"${value##*[![:space:]]}"}"
             config["${section}.${key}"]="$value"
         fi
     done < "$CONFIG_FILE"
@@ -91,7 +96,9 @@ get_all_write_dirs() {
         if [[ -n "$writedirs" ]]; then
             IFS=',' read -ra dirs <<< "$writedirs"
             for dir in "${dirs[@]}"; do
-                dir=$(echo "$dir" | xargs)
+                # Trim leading/trailing whitespace
+                dir="${dir#"${dir%%[![:space:]]*}"}"
+                dir="${dir%"${dir##*[![:space:]]}"}"
                 dir=$(eval echo "$dir")
                 all_dirs+=("$dir")
             done

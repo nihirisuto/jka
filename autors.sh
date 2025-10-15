@@ -97,7 +97,7 @@ fi
 
 cecho -c green "Running inside screen session 'jka'"
 
-# create default state files if they don't exist
+# create default state files if they dont exist
 if [ ! -f "$PORT_FILE" ]; then
     echo "$DEFAULT_PORT" > "$PORT_FILE"
 fi
