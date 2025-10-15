@@ -98,7 +98,7 @@ get_all_write_dirs() {
         else
             local fs_game="${config[$g.fs_game]}"
             if [[ -z "$fs_game" ]]; then
-                fs_game="$g"
+                fs_game="base"
             fi
 
             local engine_path="${config[$g.engine]}"
